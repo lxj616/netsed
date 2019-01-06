@@ -34,22 +34,17 @@ test/doc:
 
 release_tag: check_version
 	@if (git status --porcelain | grep '^ M') then echo "you have modified files, cannot tag"; exit 2; else exit 0; fi
-	git tag $(VERSION)
+	git tag -s $(VERSION) -m "Version $(VERSION)"
 
 quick_archive: clean check_version
 	tar cfvz ../netsed-$(VERSION).tar.gz *
 
-release_archive:
-	@git show-ref --tags $(VERSION) > /dev/null ||(echo "to release first create a tag with the current version $(VERSION)"; exit 3)
+release_archive: | release_tag
+	@git show-ref --tags $(VERSION) > /dev/null ||(echo "to release first create a tag with the current version $(VERSION).\nJust type:\n    make release_tag"; exit 3)
 	fakeroot git archive --format=tar --prefix=netsed-$(VERSION)/ $(VERSION) | gzip > ../netsed-$(VERSION).tar.gz
 
-release: release_archive
-	@echo "netsed-$(VERSION) release" > ../netsed-$(VERSION).txt
-	@echo -n "commit " >> ../netsed-$(VERSION).txt
-	@git rev-parse --verify $(VERSION) >> ../netsed-$(VERSION).txt
-	@cd .. && md5sum netsed-$(VERSION).tar.gz >> netsed-$(VERSION).txt
-	@cd .. && sha1sum netsed-$(VERSION).tar.gz >> netsed-$(VERSION).txt
-	@cd .. && sha256sum netsed-$(VERSION).tar.gz >> netsed-$(VERSION).txt
-	@cd .. && gpg -o netsed-$(VERSION).sig --clearsign netsed-$(VERSION).txt
+release: release_tag release_archive
+	@echo "netsed-$(VERSION) release"
+	@gpg --armor --detach-sign ../netsed-$(VERSION).tar.gz
 
-# and upload netsed-$(VERSION).tar.gz netsed-$(VERSION).sig
+# and upload netsed-$(VERSION).tar.gz netsed-$(VERSION).tar.gz.asc
