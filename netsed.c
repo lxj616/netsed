@@ -506,8 +506,8 @@ void parse_params(int argc,char* argv[]) {
   rport = argv[optind++];
 
   // allocate rule arrays, rule number is number of params after 5
-  rule=malloc((argc-optind)*sizeof(struct rule_s));
-  rule_live=malloc((argc-optind)*sizeof(int));
+  rule=calloc(argc-optind,sizeof(struct rule_s));
+  rule_live=calloc(argc-optind,sizeof(int));
   // parse rules
   for (i=optind;i<argc;i++) {
     char *fs=0, *ts=0, *cs=0;
