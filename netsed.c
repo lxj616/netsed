@@ -1,5 +1,5 @@
 /*
-  netsed 1.2       (C) 2010-2012  Julien VdG <julien@silicone.homelinux.org>
+  netsed 1.3       (C) 2010-2019  Julien VdG <julien@silicone.homelinux.org>
   --------------------------------------------------------------------------
 
   This work is based on the original netsed:
@@ -126,7 +126,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #endif
 
 /// Current version (recovered by Makefile for several release checks)
-#define VERSION "1.2"
+#define VERSION "1.3"
 /// max size for buffers
 #define MAX_BUF  100000
 

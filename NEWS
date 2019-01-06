@@ -1,3 +1,11 @@
+2019-01-06; netsed 1.3:
+  - fix from debian package thanks Mats Erik Anersson:
+    - Build failure during test phase. (ie fix uninitialized alloc)
+    - Ruby interpreter complains. (ie fix test)
+  - Remove gitignore from release archive.
+  - Fix warning: ‘*’ in boolean context.
+  - Implement standard release signature.
+
 2013-10-11; netsed 1.2:
   - new feature from Mats Erik Anersson:
     - Direction dependant rules.
