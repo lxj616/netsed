@@ -47,7 +47,7 @@ class NetsedRun
     # waiting for netsed to listen
     begin
       line = @pipe.gets
-      @data << line
+      @data << line.to_s
     end until line =~ /^\[\+\] Listening on port/
   end
 
