@@ -495,8 +495,9 @@ void parse_params(int argc,char* argv[]) {
   if (argc<optind+5) short_usage_hints("not enough parameters");
 
   // protocole
-  if (strcasecmp(argv[optind],"tcp")*strcasecmp(argv[optind],"udp")) short_usage_hints("incorrect protocol");
-  tcp = strncasecmp(argv[optind++], "udp", 3);
+  tcp = (strncasecmp(argv[optind], "tcp", 4) == 0)?1:0;
+  if ((strncasecmp(argv[optind], "udp", 4) != 0) && !tcp) short_usage_hints("incorrect protocol");
+  optind++;
 
   // local port
   lport = argv[optind++];
